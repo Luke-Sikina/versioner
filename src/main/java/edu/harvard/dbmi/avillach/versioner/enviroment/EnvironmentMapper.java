@@ -12,9 +12,10 @@ public class EnvironmentMapper implements RowMapper<Environment> {
     @Override
     public Environment mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Environment(
-            rs.getString("NAME"), rs.getString("URL"),
+            rs.getString("environment.NAME"),
+            rs.getString("environment.DOMAIN"),
             new VPN(rs.getString("VPN_NAME"), rs.getString("VPN_URL"), rs.getString("VPN_ORGANIZATION")),
-            List.of()
+            rs.getString("environment.EXTRA_FIELDS")
         );
     }
 }
