@@ -2,8 +2,11 @@ DROP TABLE IF EXISTS `deployment`;
 DROP TABLE IF EXISTS `environment_codebase_pair`;
 DROP TABLE IF EXISTS `environment`;
 DROP TABLE IF EXISTS `vpn`;
+DROP TABLE IF EXISTS `release_bundle_part`;
 DROP TABLE IF EXISTS `codebase`;
+DROP TABLE IF EXISTS `release_bundle`;
 
+-- A codebase is a compilable chunk of code that makes up one or more parts of a full app
 CREATE TABLE `codebase` (
     CODEBASE_ID INT(11) NOT NULL AUTO_INCREMENT,
     NAME VARCHAR(512) NOT NULL,
@@ -15,6 +18,7 @@ CREATE TABLE `codebase` (
     UNIQUE(PROJECT_CODE)
 );
 
+-- It's a VPN...
 CREATE TABLE `vpn` (
     VPN_ID INT(11) NOT NULL AUTO_INCREMENT,
     NAME VARCHAR(512) NOT NULL,
@@ -25,6 +29,7 @@ CREATE TABLE `vpn` (
     UNIQUE(URL_SHA2)
 );
 
+-- An environment is a server where an app is deployed and runs
 CREATE TABLE `environment` (
     ENVIRONMENT_ID INT(11) NOT NULL AUTO_INCREMENT,
     NAME VARCHAR(512) NOT NULL,
@@ -47,15 +52,39 @@ CREATE TABLE `environment_codebase_pair` (
     UNIQUE(ENVIRONMENT_ID, CODEBASE_ID)
 );
 
+-- A release bundle is a bundle of codebase, version pairs that makes a fully fledged app
+CREATE TABLE `release_bundle` (
+    RELEASE_BUNDLE_ID INT(11) NOT NULL AUTO_INCREMENT,
+    TITLE VARCHAR(512) NOT NULL,
+    CREATION_DATE DATETIME NOT NULL,
+    PRIMARY KEY (`RELEASE_BUNDLE_ID`)
+);
+
+CREATE TABLE `release_bundle_part` (
+    RELEASE_BUNDLE_PART_ID INT(11) NOT NULL AUTO_INCREMENT,
+    GIT_IDENTIFIER VARCHAR(512) NOT NULL,
+    CODEBASE_ID INT(11) NOT NULL,
+    RELEASE_BUNDLE_ID INT(11) NOT NULL,
+    PRIMARY KEY (`RELEASE_BUNDLE_PART_ID`),
+    FOREIGN KEY (`CODEBASE_ID`) REFERENCES `codebase` (`CODEBASE_ID`),
+    FOREIGN KEY (`RELEASE_BUNDLE_ID`) REFERENCES `release_bundle` (`RELEASE_BUNDLE_ID`)
+);
+
+-- A deployment is a release bundle that has been deployed to an environment
 CREATE TABLE `deployment` (
     DEPLOYMENT_ID INT(11) NOT NULL AUTO_INCREMENT,
     ENVIRONMENT_ID INT(11) NOT NULL,
     DEPLOYMENT_DATE DATETIME NOT NULL,
     PREVIOUS_DEPLOYMENT_ID INT(11),
     PRIMARY KEY (`DEPLOYMENT_ID`),
+    UNIQUE (DEPLOYMENT_DATE, ENVIRONMENT_ID),
     FOREIGN KEY (`ENVIRONMENT_ID`) REFERENCES `environment` (`ENVIRONMENT_ID`),
     FOREIGN KEY (`PREVIOUS_DEPLOYMENT_ID`) REFERENCES `deployment` (`DEPLOYMENT_ID`) ON DELETE SET NULL
 );
+
+INSERT INTO `release_bundle` (RELEASE_BUNDLE_ID, TITLE, CREATION_DATE) VALUES
+    (1, 'My Cool Release', '2023-07-01'),
+    (2, 'My Cool Release', '2023-07-02');
 
 INSERT INTO `vpn` (VPN_ID, NAME, URL, URL_SHA2, ORGANIZATION) VALUES
     (1, 'MY cool VPN', 'foo.com', SHA2('foo.com', 256), 'Me'),
@@ -64,6 +93,12 @@ INSERT INTO `vpn` (VPN_ID, NAME, URL, URL_SHA2, ORGANIZATION) VALUES
 INSERT INTO `codebase` (CODEBASE_ID, NAME, URL, URL_SHA2, PROJECT_CODE) VALUES
     (1, 'PIC-SURE', 'https://github.com/hms-dbmi/pic-sure', SHA2('https://github.com/hms-dbmi/pic-sure', 256), 'IDK'),
     (2, 'HPDS', 'https://github.com/hms-dbmi/pic-sure-hpds', SHA2('https://github.com/hms-dbmi/pic-sure-hpds', 256), 'WOO');
+
+INSERT INTO `release_bundle_part` (RELEASE_BUNDLE_PART_ID, GIT_IDENTIFIER, CODEBASE_ID, RELEASE_BUNDLE_ID) VALUES
+    (1, 'v2.0.0', 1, 1 ),
+    (2, 'v2.0.0', 2, 1 ),
+    (3, 'v2.0.1', 1, 2 ),
+    (4, 'v2.0.1', 2, 2 );
 
 INSERT INTO `environment` (ENVIRONMENT_ID, NAME, DOMAIN, VPN_ID, DESCRIPTION, EXTRA_FIELDS) VALUES
     (1, 'GIC BCH Dev', 'gic-bch-dev.pl.hms.harvard.edu', 1, 'Boston Children\'s GIC Institute node (dev)', '{}'),
