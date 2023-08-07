@@ -1,0 +1,33 @@
+---
+version: '3'
+services:
+  versioner:
+    image: versioner:latest
+    container_name: versioner
+    ports:
+      - "8080:8080"
+    build: .
+    env_file:
+      - .env
+    depends_on:
+      - versioner-db
+  versioner-db:
+    image: mysql:8.0
+    container_name: versioner-db
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: $VERSIONING_DB_ROOT_PASS
+      MYSQL_PASSWORD: $VERSIONING_DB_PASS
+      MYSQL_DATABASE: $VERSIONING_DB_DATABASE
+      MYSQL_USER: $VERSIONING_DB_USER
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-u", "root", "-p$VERSIONING_DB_ROOT_PASS" ]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - ./data/seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
+      - versioner-db-data:/var/lib/mysql
+volumes:
+  versioner-db-data:
+
