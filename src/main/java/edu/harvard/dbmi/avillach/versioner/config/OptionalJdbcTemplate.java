@@ -1,5 +1,7 @@
 package edu.harvard.dbmi.avillach.versioner.config;
 
+import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundle;
+import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;

@@ -19,4 +19,6 @@ public class ReleaseBundleController {
     public ResponseEntity<List<ReleaseBundle>> getAllReleaseBundles() {
         return new ResponseEntity<>(releaseBundleService.getAllReleaseBundles(), HttpStatus.OK);
     }
+
+
 }

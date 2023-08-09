@@ -25,8 +25,8 @@ class DeploymentControllerTest {
     @Test
     void shouldReturnDeployments() {
         List<Deployment> deployments = List.of(
-            new Deployment(2, "GIC BCH Dev", "My Cool Release", LocalDateTime.of(2022, 1, 2, 0, 0), 1),
-            new Deployment(1, "GIC BCH Dev", "My Cool Release", LocalDateTime.of(2022, 1, 1, 0, 0), -1)
+            new Deployment(2, "GIC BCH Dev", "My Cool Release 2", LocalDateTime.of(2022, 1, 2, 0, 0), 1),
+            new Deployment(1, "GIC BCH Dev", "My Cool Release 1", LocalDateTime.of(2022, 1, 1, 0, 0), -1)
         );
         Mockito.when(deploymentService.getAllDeploymentsForEnvironment("GIC BCH Dev"))
             .thenReturn(Optional.of(deployments));

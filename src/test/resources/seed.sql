@@ -57,7 +57,8 @@ CREATE TABLE `release_bundle` (
     RELEASE_BUNDLE_ID INT(11) NOT NULL AUTO_INCREMENT,
     TITLE VARCHAR(512) NOT NULL,
     CREATION_DATE DATETIME NOT NULL,
-    PRIMARY KEY (`RELEASE_BUNDLE_ID`)
+    PRIMARY KEY (`RELEASE_BUNDLE_ID`),
+    UNIQUE(TITLE)
 );
 
 CREATE TABLE `release_bundle_part` (
@@ -85,8 +86,8 @@ CREATE TABLE `deployment` (
 );
 
 INSERT INTO `release_bundle` (RELEASE_BUNDLE_ID, TITLE, CREATION_DATE) VALUES
-    (1, 'My Cool Release', '2023-07-01'),
-    (2, 'My Cool Release', '2023-07-02');
+    (1, 'My Cool Release 1', '2023-07-01'),
+    (2, 'My Cool Release 2', '2023-07-02');
 
 INSERT INTO `vpn` (VPN_ID, NAME, URL, URL_SHA2, ORGANIZATION) VALUES
     (1, 'MY cool VPN', 'foo.com', SHA2('foo.com', 256), 'Me'),
