@@ -23,13 +23,13 @@ class ReleaseBundleServiceTest {
     @Test
     void shouldGetAllReleaseBundles() {
         List<ReleaseBundle> bundles = List.of(
-            new ReleaseBundle("My Cool Release", LocalDateTime.of(2023, 7, 2, 0, 0),
+            new ReleaseBundle(2, "My Cool Release", LocalDateTime.of(2023, 7, 2, 0, 0),
                 List.of(
                     new ReleasePart(new CodeBase("HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO"), "v2.0.1"),
                     new ReleasePart(new CodeBase("PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.0.1")
                 )
             ),
-            new ReleaseBundle("My Cool Release", LocalDateTime.of(2023, 7, 1, 0, 0),
+            new ReleaseBundle(1, "My Cool Release", LocalDateTime.of(2023, 7, 1, 0, 0),
                 List.of(
                     new ReleasePart(new CodeBase("HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO"), "v2.0.0"),
                     new ReleasePart(new CodeBase("PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.0.0")

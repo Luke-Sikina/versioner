@@ -21,7 +21,7 @@ public class ReleaseBundleWebController {
     @RequestMapping(value = "/release-bundle/{id}")
     public String releaseBundlesForEnv(Model model, @PathVariable("id") int id) {
         return releaseBundleService.getReleaseBundle(id).map((b) -> {
-            model.addAttribute("bundle", b);
+            model.addAttribute("releaseBundle", b);
             return "release_bundle";
         }).orElse("index");
     }

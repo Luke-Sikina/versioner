@@ -17,7 +17,7 @@ public class ReleaseBundleMapper implements ResultSetExtractor<List<ReleaseBundl
     @Autowired
     CodeBaseMapper codeBaseMapper;
 
-    private static final ReleaseBundle EMPTY = new ReleaseBundle("", null, null);
+    private static final ReleaseBundle EMPTY = new ReleaseBundle(-1, "", null, null);
 
     @Override
     public List<ReleaseBundle> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -35,7 +35,8 @@ public class ReleaseBundleMapper implements ResultSetExtractor<List<ReleaseBundl
                     bundles.add(currentBundle);
                 }
                 currentBundle = new ReleaseBundle(
-                    rs.getString("TITLE"), DateTimeUtil.fromSQL(rs.getDate("CREATION_DATE")), null
+                    rs.getInt("RELEASE_BUNDLE_ID"), rs.getString("TITLE"),
+                    DateTimeUtil.fromSQL(rs.getDate("CREATION_DATE")), null
                 );
                 currentBundleId = rs.getInt("RELEASE_BUNDLE_ID");
                 parts = new ArrayList<>();

@@ -35,7 +35,7 @@
         <div class="card-body">
             <h5 class="card-title" th:text="${releaseBundle.title}"></h5>
             <p class="card-text" th:text="${releaseBundle.creationDate}"></p>
-            <a href="/release-bundle/${releaseBundle.title}" class="btn btn-primary">Manage</a>
+            <a th:href="@{/release-bundle/{id}(id=${releaseBundle.id})}" class="btn btn-primary">Manage</a>
         </div>
     </div>
 </div>
