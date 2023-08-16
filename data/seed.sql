@@ -93,14 +93,23 @@ INSERT INTO `vpn` (VPN_ID, NAME, URL, URL_SHA2, ORGANIZATION) VALUES
     (2, 'MY cool VPN 2', 'foo2.com', SHA2('foo2.com', 256), 'Me');
 
 INSERT INTO `codebase` (CODEBASE_ID, NAME, URL, URL_SHA2, PROJECT_CODE) VALUES
-    (1, 'PIC-SURE', 'https://github.com/hms-dbmi/pic-sure', SHA2('https://github.com/hms-dbmi/pic-sure', 256), 'IDK'),
-    (2, 'HPDS', 'https://github.com/hms-dbmi/pic-sure-hpds', SHA2('https://github.com/hms-dbmi/pic-sure-hpds', 256), 'WOO');
+    (1, 'PIC-SURE-API Build', 'https://github.com/hms-dbmi/pic-sure', SHA2('https://github.com/hms-dbmi/pic-sure', 256), 'PSA'),
+    (2, 'PIC-SURE-HPDS Build', 'https://github.com/hms-dbmi/pic-sure-hpds', SHA2('https://github.com/hms-dbmi/pic-sure-hpds', 256), 'PSH'),
+    (3, 'PIC-SURE Auth Micro-App Build', 'https://github.com/hms-dbmi/pic-sure-auth-microapp', SHA2('https://github.com/hms-dbmi/pic-sure-auth-microapp', 256), 'PSAMA'),
+    (4, 'PIC-SURE Core Frontend', 'https://github.com/hms-dbmi/pic-sure-core-frontend', SHA2('https://github.com/hms-dbmi/pic-sure-core-frontend', 256), 'PSHU'),
+    (5, 'Custom UI', 'https://github.com/hms-dbmi/pic-sure-gic-institution-frontend', SHA2('https://github.com/hms-dbmi/pic-sure-gic-institution-frontend', 256), 'PSU');
 
 INSERT INTO `release_bundle_part` (RELEASE_BUNDLE_PART_ID, GIT_IDENTIFIER, CODEBASE_ID, RELEASE_BUNDLE_ID) VALUES
     (1, 'v2.0.0', 1, 1 ),
     (2, 'v2.0.0', 2, 1 ),
-    (3, 'v2.0.1', 1, 2 ),
-    (4, 'v2.0.1', 2, 2 );
+    (3, 'v2.0.0', 3, 1 ),
+    (4, 'v2.0.0', 4, 1 ),
+    (5, 'v2.0.0', 5, 1 ),
+    (6, 'v2.0.0', 1, 2 ),
+    (7, 'v2.0.0', 2, 2 ),
+    (8, 'v2.0.0', 3, 2 ),
+    (9, 'v2.0.0', 4, 2 ),
+    (10, 'v2.0.0', 5, 2 );
 
 INSERT INTO `environment` (ENVIRONMENT_ID, NAME, DOMAIN, VPN_ID, DESCRIPTION, EXTRA_FIELDS) VALUES
     (1, 'GIC BCH Dev', 'gic-bch-dev.pl.hms.harvard.edu', 1, 'Boston Children\'s GIC Institute node (dev)', '{}'),

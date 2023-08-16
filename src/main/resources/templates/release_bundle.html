@@ -31,11 +31,11 @@
 </nav>
 
 <div class="container my-5 horizontal-grid" style="align-items: center; justify-content: center; display: flex;">
-    <div class="p-5 mb-4 bg-body-tertiary rounded-3" style="width: 20rem;">
-        <h4 class="" th:text="${releaseBundle.title}"></h4>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3" style="width: 35rem">
+        <h4 class="" th:text="${releaseBundle.title}" style="text-align: center;"></h4>
         <b>Created: </b> <span class="" th:text="${releaseBundle.creationDate}"></span>
         <div>
-            <h5>Components</h5>
+            <h5 style="text-align: center;">Components</h5>
             <div class="container">
                 <div class="row" th:each="part: ${releaseBundle.parts}">
                     <div class="col-md-8">
