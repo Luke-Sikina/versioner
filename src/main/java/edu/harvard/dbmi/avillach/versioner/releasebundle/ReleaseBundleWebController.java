@@ -1,5 +1,6 @@
 package edu.harvard.dbmi.avillach.versioner.releasebundle;
 
+import edu.harvard.dbmi.avillach.versioner.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,10 @@ public class ReleaseBundleWebController {
     }
 
     @RequestMapping(value = "/release-bundle/{id}")
-    public String releaseBundlesForEnv(Model model, @PathVariable("id") int id) {
+    public String releaseBundleById(Model model, @PathVariable("id") int id) {
         return releaseBundleService.getReleaseBundle(id).map((b) -> {
             model.addAttribute("releaseBundle", b);
+            model.addAttribute("releaseDate", DateTimeUtil.formatDate(b.creationDate()));
             return "release_bundle";
         }).orElse("index");
     }
