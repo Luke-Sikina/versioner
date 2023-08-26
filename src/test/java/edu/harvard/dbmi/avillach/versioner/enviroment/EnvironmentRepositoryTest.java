@@ -40,8 +40,8 @@ class EnvironmentRepositoryTest {
         Optional<Environment> actual = subject.getEnvironment("GIC BCH Dev");
 
         List<CodeBase> codeBases = List.of(
-            new CodeBase("PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"),
-            new CodeBase("HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO")
+            new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"),
+            new CodeBase(2, "HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO")
         );
 
         Environment expected = new Environment(

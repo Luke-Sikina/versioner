@@ -1,7 +1,8 @@
-package edu.harvard.dbmi.avillach.versioner.releasebundle;
+package edu.harvard.dbmi.avillach.versioner.releasebundle.part;
 
 import edu.harvard.dbmi.avillach.versioner.codebase.CodeBase;
-import edu.harvard.dbmi.avillach.versioner.releasebundle.part.ReleasePart;
+import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundle;
+import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundleRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Testcontainers
 @SpringBootTest
 @Sql(scripts = {"/seed.sql"})
-class ReleaseBundleRepositoryTest {
-
+class ReleaseBundlePartRepositoryTest {
     @Container
     static final MySQLContainer<?> databaseContainer =
         new MySQLContainer<>("mysql:8").withReuse(true);
@@ -34,26 +35,22 @@ class ReleaseBundleRepositoryTest {
     }
 
     @Autowired
-    ReleaseBundleRepository subject;
+    ReleaseBundlePartRepository subject;
+
+    @Autowired
+    ReleaseBundleRepository releaseBundleRepository;
 
     @Test
-    void shouldGetAllReleaseBundles() {
-        List<ReleaseBundle> actual = subject.getAllReleaseBundles();
-        List<ReleaseBundle> expected = List.of(
-            new ReleaseBundle(2, "My Cool Release 2", LocalDateTime.of(2023, 7, 2, 0, 0),
-                List.of(
-                    new ReleasePart(new CodeBase(2, "HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO"), "v2.0.1"),
-                    new ReleasePart(new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.0.1")
-                )
-            ),
-            new ReleaseBundle(1, "My Cool Release 1", LocalDateTime.of(2023, 7, 1, 0, 0),
-                List.of(
-                    new ReleasePart(new CodeBase(2, "HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO"), "v2.0.0"),
-                    new ReleasePart(new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.0.0")
-                )
-            )
-        );
+    void shouldCreateReleasePartsForBundle() {
+        releaseBundleRepository.createEmptyBundle(new ReleaseBundle(3, "idk", LocalDateTime.now(), List.of()));
+        List<ReleasePart> parts = List.of(
+            new ReleasePart(new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.1.1"));
 
-        Assertions.assertEquals(expected, actual);
+        subject.createReleasePartsForBundle(3, parts);
+
+        Optional<ReleaseBundle> releaseBundle = releaseBundleRepository.getReleaseBundle(3);
+
+        Assertions.assertTrue(releaseBundle.isPresent());
+        Assertions.assertEquals(releaseBundle.get().parts(), parts);
     }
 }
