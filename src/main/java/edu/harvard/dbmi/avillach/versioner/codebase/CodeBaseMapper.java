@@ -11,6 +11,7 @@ public class CodeBaseMapper implements RowMapper<CodeBase> {
     @Override
     public CodeBase mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new CodeBase(
+            rs.getInt("CODEBASE_ID"),
             rs.getString("NAME"),
             rs.getString("URL"),
             rs.getString("PROJECT_CODE")

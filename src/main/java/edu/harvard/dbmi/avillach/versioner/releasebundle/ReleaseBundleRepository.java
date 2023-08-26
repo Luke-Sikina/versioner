@@ -4,8 +4,11 @@ import edu.harvard.dbmi.avillach.versioner.config.OptionalJdbcTemplate;
 import edu.harvard.dbmi.avillach.versioner.enviroment.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,7 @@ public class ReleaseBundleRepository {
                 release_bundle.TITLE,
                 release_bundle.CREATION_DATE,
                 release_bundle_part.GIT_IDENTIFIER,
+                codebase.CODEBASE_ID,
                 codebase.NAME,
                 codebase.URL,
                 codebase.PROJECT_CODE
@@ -48,6 +52,7 @@ public class ReleaseBundleRepository {
                 release_bundle.TITLE,
                 release_bundle.CREATION_DATE,
                 release_bundle_part.GIT_IDENTIFIER,
+                codebase.CODEBASE_ID,
                 codebase.NAME,
                 codebase.URL,
                 codebase.PROJECT_CODE
@@ -59,6 +64,23 @@ public class ReleaseBundleRepository {
                 release_bundle.RELEASE_BUNDLE_ID = ?
             """;
 
+        //noinspection DataFlowIssue
         return template.query(sql, mapper, id).stream().findFirst();
+    }
+
+    public synchronized int createEmptyBundle(ReleaseBundle bundle) {
+        String sql = """
+            INSERT INTO release_bundle (TITLE, CREATION_DATE)
+            VALUES (?, now())
+            """;
+        template.update(sql, bundle.title());
+        sql = """
+            SELECT RELEASE_BUNDLE_ID as ID
+            FROM release_bundle
+            ORDER BY CREATION_DATE DESC
+            LIMIT 1;
+            """;
+        //noinspection DataFlowIssue
+        return template.queryForObject(sql, (rs, rowNum) -> rs.getInt(1));
     }
 }

@@ -1,6 +1,8 @@
 package edu.harvard.dbmi.avillach.versioner.releasebundle;
 
 import edu.harvard.dbmi.avillach.versioner.codebase.CodeBaseMapper;
+import edu.harvard.dbmi.avillach.versioner.releasebundle.part.ReleaseBundlePartMapper;
+import edu.harvard.dbmi.avillach.versioner.releasebundle.part.ReleasePart;
 import edu.harvard.dbmi.avillach.versioner.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,8 +16,9 @@ import java.util.List;
 
 @Component
 public class ReleaseBundleMapper implements ResultSetExtractor<List<ReleaseBundle>> {
+
     @Autowired
-    CodeBaseMapper codeBaseMapper;
+    ReleaseBundlePartMapper releaseBundlePartMapper;
 
     private static final ReleaseBundle EMPTY = new ReleaseBundle(-1, "", null, null);
 
@@ -42,7 +45,7 @@ public class ReleaseBundleMapper implements ResultSetExtractor<List<ReleaseBundl
                 parts = new ArrayList<>();
 
             }
-            parts.add(new ReleasePart(codeBaseMapper.mapRow(rs, -1), rs.getString("GIT_IDENTIFIER")));
+            parts.add(releaseBundlePartMapper.mapRow(rs, -1));
 
         }
         if (currentBundle != EMPTY) {

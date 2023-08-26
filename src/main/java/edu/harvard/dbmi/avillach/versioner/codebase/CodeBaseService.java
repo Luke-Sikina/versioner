@@ -16,4 +16,8 @@ public class CodeBaseService {
     public List<CodeBase> getCodeBasesForEnvironment(String environmentName) {
         return repository.getCodeBasesForEnvironment(environmentName);
     }
+
+    public List<CodeBase> createCodeBases(List<CodeBase> codeBases) {
+        return repository.createCodeBases(codeBases);
+    }
 }

@@ -1,5 +1,7 @@
 package edu.harvard.dbmi.avillach.versioner.releasebundle;
 
+import edu.harvard.dbmi.avillach.versioner.releasebundle.part.ReleasePart;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
