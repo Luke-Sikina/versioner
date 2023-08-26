@@ -29,6 +29,7 @@ public class ReleaseBundleRepository {
             SELECT
                 release_bundle.RELEASE_BUNDLE_ID,
                 release_bundle.TITLE,
+                release_bundle.STATUS,
                 release_bundle.CREATION_DATE,
                 release_bundle_part.GIT_IDENTIFIER,
                 codebase.CODEBASE_ID,
@@ -50,6 +51,7 @@ public class ReleaseBundleRepository {
             SELECT
                 release_bundle.RELEASE_BUNDLE_ID,
                 release_bundle.TITLE,
+                release_bundle.STATUS,
                 release_bundle.CREATION_DATE,
                 release_bundle_part.GIT_IDENTIFIER,
                 codebase.CODEBASE_ID,
