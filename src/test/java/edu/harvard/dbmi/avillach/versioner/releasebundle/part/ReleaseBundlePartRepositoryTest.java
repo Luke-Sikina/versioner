@@ -3,6 +3,7 @@ package edu.harvard.dbmi.avillach.versioner.releasebundle.part;
 import edu.harvard.dbmi.avillach.versioner.codebase.CodeBase;
 import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundle;
 import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundleRepository;
+import edu.harvard.dbmi.avillach.versioner.releasebundle.ReleaseBundleStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,8 @@ class ReleaseBundlePartRepositoryTest {
 
     @Test
     void shouldCreateReleasePartsForBundle() {
-        releaseBundleRepository.createEmptyBundle(new ReleaseBundle(3, "idk", LocalDateTime.now(), List.of()));
+        LocalDateTime now = LocalDateTime.now();
+        releaseBundleRepository.createEmptyBundle(new ReleaseBundle(3, ReleaseBundleStatus.Development, "idk", now, now, List.of()));
         List<ReleasePart> parts = List.of(
             new ReleasePart(new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.1.1"));
 

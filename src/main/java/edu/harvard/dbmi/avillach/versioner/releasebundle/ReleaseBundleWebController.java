@@ -24,6 +24,7 @@ public class ReleaseBundleWebController {
         return releaseBundleService.getReleaseBundle(id).map((b) -> {
             model.addAttribute("releaseBundle", b);
             model.addAttribute("releaseDate", DateTimeUtil.formatDate(b.creationDate()));
+            model.addAttribute("updateDate", DateTimeUtil.formatDate(b.updateDate()));
             return "release_bundle";
         }).orElse("index");
     }

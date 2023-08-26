@@ -56,6 +56,20 @@
                             <span class="" th:text="${releaseDate}"></span>
                         </div>
                         <div class="col-md-6">
+                            <a th:href="@{release-bundle/{id}/edit(id=${releaseBundle.id})}"
+                               class="btn btn-primary btn-sm"
+                               target="_blank"
+                            >
+                                Edit Release Bundle<i class="bi bi-pencil"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b class="">Updated: </b>
+                            <span class="" th:text="${updateDate}"></span>
+                        </div>
+                        <div class="col-md-6">
                             <b class="">Status: </b>
                             <span class="" th:text="${releaseBundle.status}"></span>
                         </div>
