@@ -25,14 +25,17 @@ class ReleaseBundleControllerTest {
 
     @Test
     void shouldGetAllReleaseBundles() {
+
         List<ReleaseBundle> bundles = List.of(
-            new ReleaseBundle(2, ReleaseBundleStatus.Development, "My Cool Release", LocalDateTime.of(2023, 7, 2, 0, 0),
+            new ReleaseBundle(2, ReleaseBundleStatus.Development, "My Cool Release",
+                LocalDateTime.of(2023, 7, 2, 0, 0), LocalDateTime.of(2023, 7, 2, 0, 0),
                 List.of(
                     new ReleasePart(new CodeBase(2, "HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO"), "v2.0.1"),
                     new ReleasePart(new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.0.1")
                 )
             ),
-            new ReleaseBundle(1, ReleaseBundleStatus.Development, "My Cool Release", LocalDateTime.of(2023, 7, 1, 0, 0),
+            new ReleaseBundle(1, ReleaseBundleStatus.Development, "My Cool Release",
+                LocalDateTime.of(2023, 7, 1, 0, 0), LocalDateTime.of(2023, 7, 1, 0, 0),
                 List.of(
                     new ReleasePart(new CodeBase(2, "HPDS", "https://github.com/hms-dbmi/pic-sure-hpds", "WOO"), "v2.0.0"),
                     new ReleasePart(new CodeBase(1, "PIC-SURE", "https://github.com/hms-dbmi/pic-sure", "IDK"), "v2.0.0")

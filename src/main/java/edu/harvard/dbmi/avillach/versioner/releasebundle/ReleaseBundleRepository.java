@@ -31,6 +31,7 @@ public class ReleaseBundleRepository {
                 release_bundle.TITLE,
                 release_bundle.STATUS,
                 release_bundle.CREATION_DATE,
+                release_bundle.UPDATE_DATE,
                 release_bundle_part.GIT_IDENTIFIER,
                 codebase.CODEBASE_ID,
                 codebase.NAME,
@@ -53,6 +54,7 @@ public class ReleaseBundleRepository {
                 release_bundle.TITLE,
                 release_bundle.STATUS,
                 release_bundle.CREATION_DATE,
+                release_bundle.UPDATE_DATE,
                 release_bundle_part.GIT_IDENTIFIER,
                 codebase.CODEBASE_ID,
                 codebase.NAME,
@@ -72,8 +74,8 @@ public class ReleaseBundleRepository {
 
     public synchronized int createEmptyBundle(ReleaseBundle bundle) {
         String sql = """
-            INSERT INTO release_bundle (TITLE, CREATION_DATE)
-            VALUES (?, now())
+            INSERT INTO release_bundle (TITLE, CREATION_DATE, UPDATE_DATE)
+            VALUES (?, now(), now())
             """;
         template.update(sql, bundle.title());
         sql = """
