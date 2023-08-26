@@ -43,13 +43,24 @@
 </div>
 
 <div class="container mt-4">
-    <h1 class="" th:text="@{{title}, {date}(title=${releaseBundle.title}, date=${releaseDate})}"></h1>
+    <h1 class="" th:text="${releaseBundle.title}"></h1>
 </div>
 
 <div class="container my-5" style="align-items: center; justify-content: center; display: flex;">
         <div class="p-5 mb-4 bg-body-tertiary rounded-3" style="width: 35rem">
             <div>
-                <h5>Components</h5>
+                <div class="container p-0 pb-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <b class="">Created: </b>
+                            <span class="" th:text="${releaseDate}"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <b class="">Status: </b>
+                            <span class="" th:text="${releaseBundle.status}"></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="container p-0">
                     <div class="row mt-2 mb-2" th:each="part: ${releaseBundle.parts}">
                         <div class="col-md-8">
