@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Release Control</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href = "css/styles.css" rel = "stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.2/jsoneditor.min.js" integrity="sha512-jhDajNRbXZ4gJ8SVzcuWTHbgSX66Dh98CwmAkhBHWVuEYVgY8G35rbZuRlQwrOcwEB6z5aYzxUptsSjgTGlCbA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Release Control</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="#">Release Bundles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/environments">Environments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/codebases">Codebases</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-2">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/release-bundles">Release Bundles</a></li>
+            <li th:text="${releaseBundle.title}" class="breadcrumb-item active" aria-current="page"></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container mt-4">
+    <h1 class="" th:text="${releaseBundle.title}"></h1>
+</div>
+
+<div class="container my-5" style="align-items: center; justify-content: center; display: flex;">
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3 col-md-12" id="jsoneditor"></div>
+    <script>
+        // create the editor
+        const container = document.getElementById("jsoneditor")
+        const options = {}
+        const editor = new JSONEditor(container, options)
+
+        // set json
+        const initialJson = [(${releaseBundleJson})];
+        editor.set(initialJson)
+    </script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="main.js"></script>
+</body>
+</html>
